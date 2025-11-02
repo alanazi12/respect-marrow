@@ -1,0 +1,253 @@
+# --- ابدأ اللصق من هنا ---
+WORKDIR="$HOME/respectmarro_next"
+
+# نظف لو موجود
+rm -rf "$WORKDIR"
+mkdir -p "$WORKDIR/pages" "$WORKDIR/styles" "$WORKDIR/public"
+
+cat > "$WORKDIR/package.json" <<'JSON'
+{
+  "name": "respectmarro_next",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "13.4.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
+JSON
+
+cat > "$WORKDIR/styles/globals.css" <<'CSS'
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+
+:root{
+  --bg: #120033;
+  --panel: #0f1112;
+  --accent: #753ada;
+  --muted: #9aa0a6;
+}
+
+html,body,#__next { height: 100%; }
+body {
+  margin:0;
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: white;
+  direction: rtl;
+}
+.container {
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 16px;
+}
+.header {
+  position: absolute;
+  top:0;
+  right:0;
+  left:0;
+  z-index:10;
+  padding:16px 0;
+}
+.nav { display:flex; justify-content:space-between; align-items:center; }
+.nav ul { display:flex; gap:18px; list-style:none; padding:0; margin:0; }
+.nav a { color:inherit; text-decoration:none; }
+.hero {
+  height: 715px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.hero .overlay {
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(123,61,232,0.2), rgba(0,0,0,0.3));
+}
+.hero .content { position:relative; z-index:2; text-align:center; padding:0 16px;}
+h1,h2,h3 { margin:0; }
+.title-lg { font-size:48px; font-weight:800; }
+.subtitle { margin-top:16px; max-width:720px; margin-left:auto; margin-right:auto; color:#d1cfe0; }
+
+.btn {
+  display:inline-block;
+  padding:14px 24px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:8px;
+  text-decoration:none;
+  margin-top:20px;
+  box-shadow: 0 0 10px rgba(117,58,218,0.9);
+}
+
+.section { padding:64px 0; }
+.grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+
+.card { background: rgba(255,255,255,0.03); padding:20px; border-radius:12px; text-align:center; }
+
+.footer { padding:24px 0; text-align:center; color:#9aa0a6; border-top:1px solid rgba(255,255,255,0.03); margin-top:40px; }
+CSS
+
+cat > "$WORKDIR/pages/_app.js" <<'JS'
+import '../styles/globals.css'
+
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+JS
+
+cat > "$WORKDIR/pages/index.js" <<'JS'
+import Head from 'next/head'
+
+export default function Home() {
+  return (
+    <>
+      <Head>
+        <title>Respect Marrow | ريسبكت مارو</title>
+        <meta name="description" content="انضم إلى سيرفر Respect Marrow، أحد أكبر السيرفرات لعشاق FiveM. تواصل مع اللاعبين واستمتع بتجربة لعب مخصصة." />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+      </Head>
+
+      <header className="header">
+        <div className="container nav">
+          <a href="/"><img alt="logo" src="https://r2.fivemanage.com/3crbeNe0IQWzbHYLzYhhS/eada51de-09cf-48b2-80dc-511dbe59b2a8-removebg-432iop4j23oil4j.png" width="140" height="40" /></a>
+          <nav>
+            <ul>
+              <li><a href="/">الرئيسية</a></li>
+              <li><a href="/streamers">صناع المحتوى</a></li>
+              <li><a href="/rules">القوانين</a></li>
+              <li><a target="_blank" href="https://marrow.sqdz.me/">المتجر</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section className="hero">
+          <video autoPlay loop muted style={{position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0}}>
+            <source src="https://respect.sa/assets/videos/rtwebsite.mp4" type="video/mp4" />
+          </video>
+          <div className="overlay" />
+          <div className="content">
+            <h1 className="title-lg">Respect Marrow | ريسبكت مارو</h1>
+            <p className="subtitle">حياكم الله في سيرفر ريسبكت المتخصص في الرول بلاي نحاول جاهدين تقديم افضل تجربه للرول بلاي في الشرق الاوسط انضم الينا الان و عيش حياتك كما تريد</p>
+            <a className="btn" target="_blank" rel="noreferrer" href="https://discord.gg/PcWmXSc63d">انظم الان</a>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="container">
+            <div style={{textAlign:'center', marginBottom:20}}>
+              <h2 style={{fontSize:28, fontWeight:700}}>شاهد أفضل البثوث</h2>
+              <p style={{color:'#bdb7d2'}}>تابع أفضل البثوث المباشرة لأحداث مميزة في مختلف المجالات.</p>
+            </div>
+            <div className="grid">
+              <div className="card">
+                <img alt="TheyabGaming" width="120" height="120" style={{borderRadius:'50%', border:'4px solid #753ada'}} src="https://files.kick.com/images/user/41087504/profile_image/conversion/2d82d9bc-3452-4e03-bc83-463cbce90d36-fullsize.webp" />
+                <div style={{marginTop:12, fontWeight:700}}>TheyabGaming</div>
+              </div>
+              <div className="card">
+                <div style={{fontSize:20, fontWeight:700}}>5k+</div>
+                <div>مجموع الاعضاء</div>
+              </div>
+              <div className="card">
+                <div style={{fontSize:20, fontWeight:700}}>7k+</div>
+                <div>مجموع المتابعين</div>
+              </div>
+              <div className="card">
+                <div style={{fontSize:20, fontWeight:700}}>لايوجد</div>
+                <div>مجتمع تويتر</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section" style={{backgroundImage:"url('https://respect.sa/asset/images/dark/bg-banner-1.webp')", backgroundSize:'cover', backgroundPosition:'center', position:'relative'}}>
+          <div style={{background:'rgba(40,17,43,0.7)', position:'absolute', inset:0}} />
+          <div className="container" style={{position:'relative', zIndex:2}}>
+            <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:20, alignItems:'center'}}>
+              <div>
+                <h3 style={{fontSize:28, fontWeight:700}}>منصات التواصل</h3>
+                <p style={{color:'#bfb7d0'}}>مجتمع سيرفر \"ريسبكت فيرست\" يمتلك حضورًا قويًا على منصات التواصل الاجتماعي، حيث يعد من الأكبر في العالم. على \"ديسكورد\" و \" التويتر \" كعدد متابعين ولاعبين ، وهو السيرفر العربي الاول على العالم يتم تخصيص له قسم خاص في منصة البثوث الشهيرة كيك دوت كوم .</p>
+              </div>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:12}}>
+                <img src="https://r2.fivemanage.com/3crbeNe0IQWzbHYLzYhhS/RespectFirst_Kick_Banner.png" alt="kick" style={{width:'100%', borderRadius:10}} />
+                <div style={{display:'flex', flexDirection:'column', gap:12}}>
+                  <a target="_blank" href="https://discord.gg/PcWmXSc63d"><img src="https://respect.sa/assets/images/index/crafter-2.png" alt="discord" style={{width:'100%', borderRadius:10}} /></a>
+                  <img src="https://respect.sa/assets/images/index/crafter-3.png" alt="twitter" style={{width:'100%', borderRadius:10}} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="container" style={{textAlign:'center'}}>
+            <h3 style={{fontSize:28, fontWeight:700}}>مجتمع ريسبكت مارو</h3>
+            <p style={{maxWidth:720, margin:'12px auto', color:'#bfb7d0'}}>مجتمع سيرفر \"ريسبكت\" العربي هو مجتمع حيوي يجمع بين اللاعبين والمؤثرين والمشاهدين، مما يخلق بيئة تفاعلية وغنية. يشارك اللاعبون في بناء تجارب مميزة داخل السيرفر، بينما يسهم المؤثرون والاستريمرز في نشر المتعة والإثارة عبر البث المباشر.</p>
+
+            <div className="grid" style={{marginTop:20}}>
+              <div className="card">
+                <i className="fa-solid fa-info" style={{fontSize:36, color:'#753ada'}}></i>
+                <h4 style={{marginTop:8}}>من نحن</h4>
+                <p>\"ريسبكت\" هو سيرفر فايف إم مخصص للاعبين العرب، تأسس في عام 2024 بهدف تقديم تجربة لعب استثنائية.</p>
+              </div>
+              <div className="card">
+                <i className="fa-solid fa-scale-balanced" style={{fontSize:36, color:'#753ada'}}></i>
+                <h4 style={{marginTop:8}}>القوانين</h4>
+                <p>القوانين تهدف إلى ضمان المتعة والاحترام بين اللاعبين، مع تنظيم سير اللعبة بطريقة عادلة وشفافة.</p>
+              </div>
+              <div className="card">
+                <i className="fa-solid fa-headset" style={{fontSize:36, color:'#753ada'}}></i>
+                <h4 style={{marginTop:8}}>اتصل بنا</h4>
+                <p>يمكنك التواصل معنا عن طريق جميع منصات التواصل الاجتماعي سواء الدسكورد او التويتر</p>
+                <a target="_blank" href="https://discord.gg/PcWmXSc63d" className="btn" style={{display:'inline-block', marginTop:12}}>الدخول إلى الديسكورد</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer className="footer">
+          حقوق الطبع والنشر © 2025 Respect Marrow. جميع الحقوق محفوظة.
+        </footer>
+      </main>
+    </>
+  )
+}
+JS
+
+# create a small README
+cat > "$WORKDIR/README.txt" <<'TXT'
+Respect Marrow - Next.js copy (minimal)
+---------------------------------------------------
+This is a minimal Next.js project prepared for deployment to Vercel or any Node.js hosting.
+How to run locally:
+1. cd respectmarro_next
+2. npm install
+3. npm run dev
+
+Notes:
+- External assets (videos, images, fonts) are loaded from original sites via absolute URLs.
+- This project mimics the look; further tweaks can be made after deployment.
+TXT
+
+# install dependencies and create zip
+cd "$WORKDIR" || exit 1
+echo "Installing dependencies (this may take a while)..."
+npm install --no-audit --no-fund >/dev/null 2>&1 || echo "npm install failed or not available (you can run it manually)."
+
+ZIPFILE="$HOME/respectmarro_ready.zip"
+rm -f "$ZIPFILE"
+cd ..
+zip -r "$ZIPFILE" "$(basename "$WORKDIR")" >/dev/null 2>&1 || echo "zip failed, please zip the folder manually."
+
+echo "DONE"
+echo "Project created at: $WORKDIR"
+echo "ZIP file: $ZIPFILE"
+# --- نهاية السكربت ---
